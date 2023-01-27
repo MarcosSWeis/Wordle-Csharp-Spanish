@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32811.315
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{95E35469-F8BC-4A71-A1BE-E1594AFBFE71}"
+	ProjectSection(SolutionItems) = preProject
+		Notas.txt = Notas.txt
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wordle.Service", "src\Wordle.Service\Wordle.Service.csproj", "{1EF0DB94-28A0-4D6A-B321-BFF435911928}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wordle.Console", "src\Wordle.Console\Wordle.Console.csproj", "{04E7C9D6-9B6D-4E19-8204-7DF44DE8FAEA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wordle.Models", "src\Wordle.Models\Wordle.Models.csproj", "{F4E13B93-F0F4-41CD-A87C-AD9D90F46A16}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wordle.WebApp", "src\Wordle.WebApp\Wordle.WebApp.csproj", "{F5E498E4-8E0E-4515-A8B7-5A9A1CE18E3E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1EF0DB94-28A0-4D6A-B321-BFF435911928}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EF0DB94-28A0-4D6A-B321-BFF435911928}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EF0DB94-28A0-4D6A-B321-BFF435911928}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EF0DB94-28A0-4D6A-B321-BFF435911928}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04E7C9D6-9B6D-4E19-8204-7DF44DE8FAEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04E7C9D6-9B6D-4E19-8204-7DF44DE8FAEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04E7C9D6-9B6D-4E19-8204-7DF44DE8FAEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04E7C9D6-9B6D-4E19-8204-7DF44DE8FAEA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4E13B93-F0F4-41CD-A87C-AD9D90F46A16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4E13B93-F0F4-41CD-A87C-AD9D90F46A16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4E13B93-F0F4-41CD-A87C-AD9D90F46A16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4E13B93-F0F4-41CD-A87C-AD9D90F46A16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5E498E4-8E0E-4515-A8B7-5A9A1CE18E3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5E498E4-8E0E-4515-A8B7-5A9A1CE18E3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5E498E4-8E0E-4515-A8B7-5A9A1CE18E3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5E498E4-8E0E-4515-A8B7-5A9A1CE18E3E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1EF0DB94-28A0-4D6A-B321-BFF435911928} = {95E35469-F8BC-4A71-A1BE-E1594AFBFE71}
+		{04E7C9D6-9B6D-4E19-8204-7DF44DE8FAEA} = {95E35469-F8BC-4A71-A1BE-E1594AFBFE71}
+		{F4E13B93-F0F4-41CD-A87C-AD9D90F46A16} = {95E35469-F8BC-4A71-A1BE-E1594AFBFE71}
+		{F5E498E4-8E0E-4515-A8B7-5A9A1CE18E3E} = {95E35469-F8BC-4A71-A1BE-E1594AFBFE71}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4C4DA463-9E62-4B30-BA04-1D1869F411D2}
+	EndGlobalSection
+EndGlobal

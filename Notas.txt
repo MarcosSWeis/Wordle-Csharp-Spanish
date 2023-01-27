@@ -1,0 +1,33 @@
+Provamso con controllers 
+
+
+ * El teclado intecatua con DOM 
+ {
+		- Pintando de color dependiendo el status	
+		- Modificando caracteres 
+		- Cada fila para adivinar la palabra va a ser marcada por la clase  CheckWord con su propiedad CountEmbeddedWords  (cantidad de palabras insertadas comienza en cero , va aumentando a medida que insertamso palabras hasta llegar a 6° chance)
+
+
+ 
+ }
+
+
+
+ * Cuando aprete entrer llamo a mi clase CheckWord para verificar la palabra
+ {
+		- Si la palabra contiene menso de 5 caracteres devuelvo un Alert (SwiftAlert)
+		- Si la palabra contiene alguans de esas letras interactuo con mi objeto KeyBoard para indicar que las letras no contenidas quedan en estado bloqueao
+		  que las lestras que contiene las pinte de color amarillo , y que las letras correctas en dicha posicion las marque de color verde
+		-
+ 
+ nota caundo verifique la intancia de tecaldo va a cambiar , pero no el dom debo tenr una funcion que me lo refresque
+ 
+ }
+
+
+ * Cuando borre ese interactua con DOM
+ {
+		-Me paro sobre el la fila en al que estoy con CheckWord con su propiedad CountEmbeddedWords  y comienzo a rellenar de atras hacia adelante con caracters en blanco ("")
+ 
+ }
+

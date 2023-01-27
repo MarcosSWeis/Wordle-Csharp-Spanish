@@ -1,0 +1,62 @@
+﻿@page
+@using Newtonsoft.Json
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+   
+    <div class="text-center">
+
+        <div class="ctn-grid-word">
+            @for (int i = 0 ; i < 6 ; i++)
+        {
+            <div class="rows-grid-word" aria-label="row-@i" id="row-grid-@i">
+                @for (int j = 0 ; j < 5 ; j++)
+                {
+                    <div class="animation-card bg-dark" style="animation-delay : @j*100">
+                         <div class="letter-card" id="card-grid-@j"></div>
+                     </div>
+                }
+             </div>
+        }
+        </div>
+    
+         <div class="keyboard">
+             <dvi class="keyboard-row ">
+                @for (int i = 0 ; i <=9 ; i++)
+                {
+
+                <button type="button" onclick="SetCharacterInGril('@Model.KeyBoard.Letters[i].Character','@Model.KeyBoard.Letters[i].Status')">
+                    @Model.KeyBoard.Letters[i].Character
+                </button>
+                
+                }
+
+            </dvi>
+        <dvi class="keyboard-row keyboard-row-mid">
+                @for (int i = 10 ; i <= 18 ; i++)
+                {
+                <button type="button" onclick="SetCharacterInGril('@Model.KeyBoard.Letters[i].Character','@Model.KeyBoard.Letters[i].Status')">
+                @Model.KeyBoard.Letters[i].Character 
+                </button>
+
+
+            }
+            </dvi>
+            <dvi class="keyboard-row ">
+            @for (int i = 19 ; i < Model.KeyBoard.Letters.Count ; i++)
+                {
+
+                <button type="button" onclick="SetCharacterInGril('@Model.KeyBoard.Letters[i].Character','@Model.KeyBoard.Letters[i].Status')"
+                data-marker="@JsonConvert.SerializeObject(Model.KeyBoard.Letters[i])">
+                    @Model.KeyBoard.Letters[i].Character
+                </button>
+                }
+            </dvi>
+       
+    </div>
+    </div>
+
+</div>
