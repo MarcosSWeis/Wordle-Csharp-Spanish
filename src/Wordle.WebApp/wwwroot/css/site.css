@@ -60,9 +60,7 @@ nav {
     box-sizing: border-box;
     color: white;
     text-transform: uppercase;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    user-select: none;
+  
    
 
 }
@@ -77,9 +75,7 @@ nav {
     height: 50%;
     margin-bottom:2.5rem;
     margin: 0 8px;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    user-select: none;
+  
     width:80%;
     margin:auto;
 }
@@ -103,16 +99,17 @@ nav {
     margin: 0 6px 0 0;
     height: 58px;
     border-radius: 4px;
-    cursor: pointer;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    user-select: none;
+    cursor: pointer; 
+    color:white;
     background-color: #343a40;
-    color: var(--key-text-color);
     flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
     text-transform: uppercase;
     -webkit-tap-highlight-color: rgba(0,0,0,.3);
+}
+
+.contain-letter {
+    background-color: #b59f3b;
 }

@@ -17,7 +17,7 @@ namespace Wordle.Service
 
         private LoadWords _words;
 
-        private int Prueba = 10;
+        public int Prueba = 10;
 
         [Inject] protected JSRuntime JS { get; set; }
 

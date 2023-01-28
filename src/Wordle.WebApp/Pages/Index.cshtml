@@ -1,8 +1,10 @@
 ﻿@page
 @using Newtonsoft.Json
+@using Wordle.Service
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
+    // data-marker="@JsonConvert.SerializeObject(Model.KeyBoard.Letters[i])"
 }
 
 <div class="text-center">
@@ -15,7 +17,7 @@
             <div class="rows-grid-word" aria-label="row-@i" id="row-grid-@i">
                 @for (int j = 0 ; j < 5 ; j++)
                 {
-                    <div class="animation-card bg-dark" style="animation-delay : @j*100">
+                    <div class="animation-card bg-dark" style="animation-delay : @j*100" >
                          <div class="letter-card" id="card-grid-@j"></div>
                      </div>
                 }
@@ -28,7 +30,7 @@
                 @for (int i = 0 ; i <=9 ; i++)
                 {
 
-                <button type="button" onclick="SetCharacterInGril('@Model.KeyBoard.Letters[i].Character','@Model.KeyBoard.Letters[i].Status')">
+                    <button type="button" class="btn-key-board" id="btn-key-board" onclick="SetCharacterInGril('@Model.KeyBoard.Letters[i].Character','@Model.KeyBoard.Letters[i].Status',0,'@Model.KeyBoard.Letters[i].GetType()')">
                     @Model.KeyBoard.Letters[i].Character
                 </button>
                 
@@ -38,7 +40,7 @@
         <dvi class="keyboard-row keyboard-row-mid">
                 @for (int i = 10 ; i <= 18 ; i++)
                 {
-                <button type="button" onclick="SetCharacterInGril('@Model.KeyBoard.Letters[i].Character','@Model.KeyBoard.Letters[i].Status')">
+                    <button type="button" class="btn-key-board" id="btn-key-board" onclick="SetCharacterInGril('@Model.KeyBoard.Letters[i].Character','@Model.KeyBoard.Letters[i].Status',0,'@Model.KeyBoard.Letters[i].GetType()')">
                 @Model.KeyBoard.Letters[i].Character 
                 </button>
 
@@ -49,13 +51,14 @@
             @for (int i = 19 ; i < Model.KeyBoard.Letters.Count ; i++)
                 {
 
-                <button type="button" onclick="SetCharacterInGril('@Model.KeyBoard.Letters[i].Character','@Model.KeyBoard.Letters[i].Status')"
-                data-marker="@JsonConvert.SerializeObject(Model.KeyBoard.Letters[i])">
+                    <button type="button" class="btn-key-board" id="btn-key-board"  onclick="SetCharacterInGril('@Model.KeyBoard.Letters[i].Character','@Model.KeyBoard.Letters[i].Status',0,'@Model.KeyBoard.Letters[i].GetType()')">
                     @Model.KeyBoard.Letters[i].Character
                 </button>
                 }
             </dvi>
-       
+     
+
+           
     </div>
     </div>
 

@@ -42,7 +42,7 @@ namespace Wordle.Service
                     Letters.Add(new Enter(StatusLetters.Default,KeyBoardLetters[i]));
                 } else if (i == 27)
                 {
-                    Letters.Add(new DeleteLetter(StatusLetters.Default,KeyBoardLetters[i]));
+                    Letters.Add(new CleanLetter(StatusLetters.Default,KeyBoardLetters[i]));
                 }
             }
         }
@@ -50,6 +50,11 @@ namespace Wordle.Service
         public bool IsEnter(Letter letter)
         {
             return typeof(Enter) == letter.GetType();
+        }
+
+        public bool IsClean(Letter letter)
+        {
+            return typeof(CleanLetter) == letter.GetType();
         }
 
         //El teclado recibe una palabra y con esa palabra verifico
