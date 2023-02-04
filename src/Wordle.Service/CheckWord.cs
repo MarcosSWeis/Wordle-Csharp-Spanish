@@ -2,10 +2,12 @@
 using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Web;
+using System.Web.Services;
 namespace Wordle.Service
 {
     public class CheckWord
@@ -13,13 +15,9 @@ namespace Wordle.Service
         //palabras insetadas
         public ushort CountEmbeddedWords { get; } = 0;//se irian sumando hasta 6
 
-        private KeyBoard _keyBoard;
+        private KeyBoard? _keyBoard;
 
-        private LoadWords _words;
-
-        public int Prueba = 10;
-
-        [Inject] protected JSRuntime JS { get; set; }
+        private LoadWords? _words;
 
         public CheckWord(LoadWords words,KeyBoard keyBoard)
         {
@@ -27,59 +25,66 @@ namespace Wordle.Service
             _words = words;
 
         }
-
-
-
-
-        //ESTA DEVERIA TENER LA INTANCIA DE TECLADO PARA CAMBIAR LOS ESTADOS DE LAS TECLAS
-        [JSInvokable]
-        public async Task ContainsLetters()
+        public bool WordIsCorrect(Letter[,] letters,int currentRow)
         {
-            //if (_keyBoard.Letters.Contains(new ))
-            Prueba = 50;
-
+            string word = _joinLetters(letters,currentRow);
+            return _words?.GetCurrentWord() == word;
         }
 
+        //cheque si la palabra esta en el array, para mandar error si puso cualquir cosa
 
-        //DEBERIA TENER LA  PABLARA RANDOM para comprar  (LoadWords)
-        [JSInvokable]
-        public async Task WordIsCorrect()
+
+        //Actualiza los estados de la teclas dependiendo si fue usada, si la contiene
+        public Letter[] UpdateStatusLetter(Letter?[,] letters,int currentRow)
         {
-            //if (_words.GetCurrentWord() == )
-            Prueba = 25;
-
-        }
-
-        public async Task WordIsCorrectJavaScript()
-        {
-
-            // EL PASO EL NOMBRE DE LA FUNCION DE JS QUE QUIERO QUE EJECUTE
-            //Y TAMBIEN LE PASO UNA REFERENCIA DE UN OBJETO DE .NET PERO QUE TAMBIEN SE PUEDE USAR DESE JS PARA ESO USAMOS DotNetObjectReference.Create()
-            //y a ese create le pasamso la funcion que queremos usar en realida que seria la del WordIsCorrect() , le paso this que es la referecia a todo mi objeto CheckWord
-            await JS.InvokeVoidAsync("unMetodoDeJSEnCsharp",DotNetObjectReference.Create(this));
-        }
-
-        private string ConcateLetters()
-        {
-            for (int i = 0 ; i < _words.CountLettersByWord ; i++)
+            var rowGridLetters = new Letter[5];
+            for (int i = 0 ; i < 5 ; i++)
             {
+                var letterKeyBoard = _keyBoard?.Letters.Find(x => x.Character == letters[currentRow,i]?.Character);
+                var status = this.ContainLetter(letters[currentRow,i],i);
+                var character = letters[currentRow,i].Character;
 
+                if (letterKeyBoard != null)
+                {
+                    //change state letter keyboard
+                    letterKeyBoard.Status = status;
+                    rowGridLetters[i] = new Letter(status,character);
+                }
 
             }
-
-            return "";
+            return rowGridLetters;
         }
 
+        private string _joinLetters(Letter[,] letters,int currentRow)
+        {
+            string completeWord = "";
+            for (int j = 0 ; j < 5 ; j++)
+            {
+                completeWord += letters[currentRow,j].Character;
+            }
 
-        //DEBERIA TENER LAs intancias de cada letra para los estados, (saber si en tal posisicon la contenia o era correcta la posicion )
+            return completeWord.ToLower();
+        }
 
+        private StatusLetters ContainLetter(Letter letter,int positionLetter)
+        {
+            if (_words.GetCurrentWord().Contains(letter.Character.ToLower()))
+            {
+                if (_words.GetCurrentWord().IndexOf(letter.Character.ToLower()) == positionLetter)
+                {
+                    return StatusLetters.Ok;
+                }
+                return StatusLetters.Contains;
 
+            } else
+                return StatusLetters.Locked;
+        }
 
-        /*
-
-         *Avisar si la palabra no esta permitida
-         *
-         */
-
+        public bool WordExists(Letter?[,] letters,int currentRow)
+        {
+            string word = _joinLetters(letters,currentRow);
+            return _words.GetListWords().Contains(word);
+        }
     }
 }
+

@@ -1,10 +1,4 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
-
-// Write your JavaScript code.
-
-
- function  SetCharacterInGril(character, status, numGril = 0, type) {
+﻿function SetCharacterInGril(character, status, numGril = 0, type) {
 
     if (!type.split(".").includes("Enter") && !type.split(".").includes("CleanLetter")) {
         const rowGril = document.getElementById("row-grid-" + numGril).children
@@ -38,7 +32,7 @@
                 },
 
             }).then((res) => {
-               return res.json();
+                return res.json();
             }).then((data) => {
                 console.log(data)
                 //logica para pintar la palabras y bloquear teclas dependieno de las palabras
@@ -49,7 +43,7 @@
 
 
 
-   
+
 }
 function GetEmpty(rowGril) {
 
@@ -57,7 +51,7 @@ function GetEmpty(rowGril) {
 
         if (rowGril[i].children[0].textContent == "") {
             return rowGril[i].children[0]
-        } 
+        }
     }
     return rowGril[4].children[0]
 }
@@ -69,8 +63,8 @@ function GetEmptyClear(rowGril) {
             return i
         }
     }
-        return rowGril.length
-   
+    return rowGril.length
+
 }
 
 
@@ -80,23 +74,23 @@ function CleanCharacters(numGril) {
     const rowGril = document.getElementById("row-grid-" + numGril).children
     let posisionAlimpiar = GetEmptyClear(rowGril);
     if (posisionAlimpiar != 0) {
-    rowGril[posisionAlimpiar-1].children[0].textContent = "";
+        rowGril[posisionAlimpiar - 1].children[0].textContent = "";
     }
 }
 
-const StatusLetters={
-   Default :0,
-   Contains :1,
-   Ok:2,
-   Blocked:3
+const StatusLetters = {
+    Default: 0,
+    Contains: 1,
+    Ok: 2,
+    Blocked: 3
 }
 
 
-function Check(numGril){
+function Check(numGril) {
     const rowGril = document.getElementById("row-grid-" + numGril).children
     let word = "";
     for (var i = 0; i < rowGril.length; i++) {
-       word= word + rowGril[i].children[0].textContent
+        word = word + rowGril[i].children[0].textContent
     }
     return word
 }

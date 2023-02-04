@@ -10,7 +10,7 @@ namespace Wordle.Service
     {
         public StatusLetters Status { get; set; }
 
-        public string Character { get; set; }
+        public string Character { get; }
 
 
         //podria hacerlo con delegados
@@ -22,6 +22,12 @@ namespace Wordle.Service
 
         }
 
+        public Letter(Letter letter)
+        {
+            Status = letter.Status;
+            Character = letter.Character;
+
+        }
 
     }
 }

@@ -11,7 +11,7 @@ namespace Wordle.Service
         Default = 0,
         Contains,
         Ok,
-        Blocked
+        Locked
 
     }
 }

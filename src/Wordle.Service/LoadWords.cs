@@ -12,7 +12,7 @@ namespace Wordle.Service
 
         private string _pathfileWordByLetters = "bin/Debug/net6.0/length/05.txt";
 
-        private string _currentWord;
+        private string _currentWord = "";
 
         public int CountLettersByWord { get; set; }
 
@@ -65,6 +65,10 @@ namespace Wordle.Service
             _sr.Close();
         }
 
+        public List<string> GetListWords()
+        {
+            return _words;
+        }
         public string GetCurrentWord()
         {
             return _currentWord;
@@ -78,6 +82,7 @@ namespace Wordle.Service
 
             return _currentWord;
         }
+
 
 
         private int GetNumberWordRandom()

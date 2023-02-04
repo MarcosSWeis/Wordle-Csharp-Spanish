@@ -2,9 +2,10 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Wordle.Service;
 
-namespace Wordle.WebApp.Pages
+
+namespace Wordle.WebApp.Views.Wordle
 {
-    public class IndexModel :PageModel
+    public class CheckModel :PageModel
     {
 
         public readonly KeyBoard KeyBoard;
@@ -13,7 +14,7 @@ namespace Wordle.WebApp.Pages
 
 
         // public List<Letter> Letters;
-        public IndexModel(KeyBoard keyBoard,LoadWords words)
+        public CheckModel(KeyBoard keyBoard,LoadWords words)
         {
             KeyBoard = keyBoard;
             Words = words;
@@ -26,10 +27,7 @@ namespace Wordle.WebApp.Pages
             CheckWord = new CheckWord(Words,KeyBoard);
         }
 
-        public void OnPost()
-        {
-            CheckWord = new CheckWord(Words,KeyBoard);
-        }
+
     }
 
 }

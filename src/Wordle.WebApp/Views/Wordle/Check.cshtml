@@ -1,11 +1,8 @@
-﻿@page
-@model IndexModel
+﻿ @model Wordle.WebApp.Views.Wordle.CheckModel
+
 @{
-    ViewData["Title"] = "Index";
-  
+    ViewData["Title"] = "Check";
 }
-
-
 
 <div class="text-center">
 
@@ -48,12 +45,12 @@
         <dvi class="keyboard-row ">
             @for (int i = 19 ; i < Model.KeyBoard.Letters.Count ; i++)
             {
-           
+
 
                 <button type="button" class="btn-key-board" id="btn-key-board" onclick="SetCharacterInGril('@Model.KeyBoard.Letters[i].Character','@Model.KeyBoard.Letters[i].Status',0,'@Model.KeyBoard.Letters[i].GetType()')">
                     @Model.KeyBoard.Letters[i].Character
                 </button>
-                
+
             }
         </dvi>
 
@@ -62,7 +59,4 @@
     </div>
 </div>
 
-
 <partial name="_NotificationPartial"/>
-
-

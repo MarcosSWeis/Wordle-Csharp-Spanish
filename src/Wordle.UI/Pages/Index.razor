@@ -1,0 +1,146 @@
+﻿@page "/"
+@using System.Diagnostics
+@using Wordle.Service;
+@using Wordle.UI.Helpers
+@inject LoadWords words
+@inject KeyBoard keyboard
+@inject SweetAlertService Swal;
+
+    <div class="text-center">
+
+        <div class="ctn-grid-word">
+            @for (int i = 0 ; i < 6 ; i++)
+        {
+            <div class="rows-grid-word" aria-label="row-@i" id="row-grid-@i">
+                @for (int j = 0 ; j < 5 ; j++)
+                {
+                    <div class="animation-card bg-dark" style="animation-delay : @j*100">
+                        <div class="letter-card  @(i<letters.GetLength(0) && j<letters.GetLength(1)? "status-"+letters[i,j]?.Status.ToString():"")" id="card-grid-@j">
+
+                            @if (i < letters.GetLength(0))
+                            {
+                                if (j < letters.GetLength(1))
+                                {
+                                    @letters[i,j]?.Character                                    
+                                }
+                            }                  
+                            
+                         </div>
+                     </div>
+                }
+             </div>
+        }
+        </div>
+    
+         <div class="keyboard">
+             <dvi class="keyboard-row ">
+                @for (int i = 0 ; i <=9 ; i++)
+                {
+                int j = i;
+                <button class="status-@(keyboard.Letters[j].Status)" @onclick="()=> SetLetterInGril(keyboard.Letters[j])">@keyboard.Letters[j].Character</button>
+                }
+
+            </dvi>
+        <dvi class="keyboard-row keyboard-row-mid">
+                @for (int i = 10 ; i <= 18 ; i++)
+                {
+                int j = i;
+                <button class="status-@(keyboard.Letters[j].Status)" @onclick="()=> SetLetterInGril(keyboard.Letters[j])">@keyboard.Letters[j].Character</button>
+                }
+            </dvi>
+            <dvi class="keyboard-row ">
+            @for (int i = 19 ; i < keyboard.Letters.Count ; i++)
+                {
+                int j = i;
+                <button class="status-@(keyboard.Letters[j].Status)" @onclick="()=> SetLetterInGril(keyboard.Letters[j])">@keyboard.Letters[j].Character</button>
+
+                }
+            </dvi>
+       
+    </div>
+    </div>
+
+@code{
+
+    protected int Colum=0; 
+    protected int RowEnter=0; 
+    protected Letter?[,] letters = new Letter[6,5];
+    protected async Task GetWord()
+    {
+        CheckWord check = new CheckWord(words,keyboard);
+        NotificationAlert notification = new NotificationAlert(Swal);
+        //chequear si existe la palabra 
+        if (check.WordExists(letters,RowEnter))
+        {
+            if (check.WordIsCorrect(letters,RowEnter))
+            {
+                await  notification.BasicNotificationAsync("Era la buena","Felicitaciones has ganado",SweetAlertIcon.Success);
+
+
+            }else{
+                for (int j = 0 ; j < 5 ; j++)
+                {
+                    letters[RowEnter,j]= check.UpdateStatusLetter(letters,RowEnter)[j];
+                }
+                RowEnter++;
+                Colum = 0;
+            }            
+        }else
+        {
+            await notification.BasicNotificationAsync("Warning","Palabra no contenida",SweetAlertIcon.Warning);
+        }           
+        
+    }
+
+    protected async Task SetLetterInGril(Letter letter)
+    {
+
+        if(keyboard.IsEnter(letter)){
+            if (RowEnter< 5 && Colum ==5)
+            {
+               await GetWord();
+              
+            }else{
+               await GetWord();
+                //si no gano, entonces pierde proque era la ultima chence
+            }
+        }
+        else if (keyboard.IsClean(letter))
+        {
+            CleanWord();
+        }else{     
+
+            if (Colum < 5)
+            {
+                AddLetter(letter);
+            }
+        }
+
+
+    }
+    protected void CleanWord()
+    {                     
+        DiscountLetter();        
+    }
+
+
+
+    private void AddLetter(Letter letter){
+
+        if(Colum<5)
+        {
+            letters[RowEnter,Colum] = new Letter(StatusLetters.Default,letter.Character);
+            Colum++;
+        }
+    
+    }
+    private void DiscountLetter()
+    {  
+        if (Colum > 0)
+        {                      
+        Colum--;
+        letters[RowEnter,Colum] = null;
+        }
+   
+     }
+}
