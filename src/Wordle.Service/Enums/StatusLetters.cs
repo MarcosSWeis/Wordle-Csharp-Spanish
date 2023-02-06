@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Wordle.Service
+namespace Wordle.Service.Enums
 {
     public enum StatusLetters
     {

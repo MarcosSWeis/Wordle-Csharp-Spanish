@@ -14,4 +14,9 @@
     <ProjectReference Include="..\Wordle.Service\Wordle.Service.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Data\" />
+    <Folder Include="Helpers\" />
+  </ItemGroup>
+
 </Project>

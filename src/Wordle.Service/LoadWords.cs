@@ -2,6 +2,7 @@
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
+using Wordle.Service.Interface;
 
 namespace Wordle.Service
 {
@@ -27,9 +28,10 @@ namespace Wordle.Service
             _pathfileWordByLetters = FileSelectorByNumeberOfLetters(countLettersByWord);
 
             _sr = new StreamReader(_pathfileWordByLetters);
+
             StartReadFile();
 
-            GetWord();
+            GetNewWord();
 
         }
 
@@ -44,7 +46,7 @@ namespace Wordle.Service
             return Path.Combine(Directory.GetCurrentDirectory(),_pathfileWordByLetters);
         }
 
-        public void StartReadFile()
+        private void StartReadFile()
         {
             int cont = 0;
             while (cont < (int) _sr.BaseStream.Length)
@@ -74,7 +76,7 @@ namespace Wordle.Service
             return _currentWord;
         }
 
-        public string GetWord()
+        public string GetNewWord()
         {
             int rnd = GetNumberWordRandom();
 
@@ -82,13 +84,10 @@ namespace Wordle.Service
 
             return _currentWord;
         }
-
-
-
         private int GetNumberWordRandom()
         {
             Random rnd = new Random();
-            return rnd.Next(1,_words.Count - 2);
+            return rnd.Next(1,_words.Count);
         }
     }
 }

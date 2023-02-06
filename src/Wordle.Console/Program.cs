@@ -1,14 +1,10 @@
 ﻿using Wordle.Service;
+using Wordle.Service.Interface;
 
 ILoadWords lw = new LoadWords();
-KeyBoard key = new KeyBoard();
 
-
-
-
-lw.StartReadFile();
-Console.WriteLine($"poperty a  : {lw.GetWord()} ");
-Console.WriteLine($"poperty a  : {lw.GetWord()} ");
+Console.WriteLine($"poperty a  : {lw.GetCurrentWord()} ");
+Console.WriteLine($"poperty a  : {lw.GetCurrentWord()} ");
 
 
 

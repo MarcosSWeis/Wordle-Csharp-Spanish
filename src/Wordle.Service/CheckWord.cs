@@ -8,46 +8,53 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Services;
+using Wordle.Service.Enums;
+using Wordle.Service.Extensions;
+using Wordle.Service.Interface;
+
 namespace Wordle.Service
 {
-    public class CheckWord
+    public class CheckWord :ICheckWord
     {
-        //palabras insetadas
-        public ushort CountEmbeddedWords { get; } = 0;//se irian sumando hasta 6
-
-        private KeyBoard? _keyBoard;
-
-        private LoadWords? _words;
-
-        public CheckWord(LoadWords words,KeyBoard keyBoard)
+        private IKeyBoard _keyBoard;
+        private ILoadWords _words;
+        public CheckWord(ILoadWords words,IKeyBoard keyBoard)
         {
             _keyBoard = keyBoard;
             _words = words;
 
         }
-        public bool WordIsCorrect(Letter[,] letters,int currentRow)
+        public bool WordIsCorrect(Letter?[,] letters,int currentRow)
         {
             string word = _joinLetters(letters,currentRow);
             return _words?.GetCurrentWord() == word;
         }
 
-        //cheque si la palabra esta en el array, para mandar error si puso cualquir cosa
-
-
-        //Actualiza los estados de la teclas dependiendo si fue usada, si la contiene
+        //cheque si la palabra esta en el array, para mandar error si puso cualquir cosa       
+        /// <summary>
+        /// habia que tenr un UpdateStatusLetterGril y Un UpdateStatusLetterKeyBoard (este privado)
+        /// </summary>
+        /// <param name="letters"></param>
+        /// <param name="currentRow"></param>
+        /// <returns></returns>
         public Letter[] UpdateStatusLetter(Letter?[,] letters,int currentRow)
         {
             var rowGridLetters = new Letter[5];
             for (int i = 0 ; i < 5 ; i++)
             {
-                var letterKeyBoard = _keyBoard?.Letters.Find(x => x.Character == letters[currentRow,i]?.Character);
+                var letterKeyBoard = _keyBoard?.GetLetters().Find(x => x.Character == letters[currentRow,i]?.Character);
                 var status = this.ContainLetter(letters[currentRow,i],i);
-                var character = letters[currentRow,i].Character;
+                var character = letters[currentRow,i]?.Character;
 
-                if (letterKeyBoard != null)
+                if (letterKeyBoard != null && character != null)
                 {
                     //change state letter keyboard
-                    letterKeyBoard.Status = status;
+                    //si el estado ya fue cambiado a Ok , entonces no lo lo cambio por nada 
+                    if (letterKeyBoard.Status != StatusLetters.Ok)
+                    {
+                        letterKeyBoard.Status = status;
+                    }
+
                     rowGridLetters[i] = new Letter(status,character);
                 }
 
@@ -55,12 +62,12 @@ namespace Wordle.Service
             return rowGridLetters;
         }
 
-        private string _joinLetters(Letter[,] letters,int currentRow)
+        private string _joinLetters(Letter?[,] letters,int currentRow)
         {
             string completeWord = "";
             for (int j = 0 ; j < 5 ; j++)
             {
-                completeWord += letters[currentRow,j].Character;
+                completeWord += letters[currentRow,j]?.Character;
             }
 
             return completeWord.ToLower();
@@ -70,6 +77,9 @@ namespace Wordle.Service
         {
             if (_words.GetCurrentWord().Contains(letter.Character.ToLower()))
             {
+                var index = _words.GetCurrentWord().IndexesOfManyCharaters(letter.Character.ToLower());
+                var a = index?.Count;
+                // if (index.Contains(positionLetter))
                 if (_words.GetCurrentWord().IndexOf(letter.Character.ToLower()) == positionLetter)
                 {
                     return StatusLetters.Ok;

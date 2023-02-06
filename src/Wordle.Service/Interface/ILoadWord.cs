@@ -4,13 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Wordle.Service
+namespace Wordle.Service.Interface
 {
     public interface ILoadWords
     {
-
-        public void StartReadFile();
-
-        public string GetWord();
+        public string GetNewWord();
+        public List<string> GetListWords();
+        public string GetCurrentWord();
     }
 }

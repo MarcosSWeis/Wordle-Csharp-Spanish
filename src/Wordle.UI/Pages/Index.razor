@@ -1,10 +1,10 @@
 ﻿@page "/"
 @using System.Diagnostics
 @using Wordle.Service;
-@using Wordle.UI.Helpers
-@inject LoadWords words
-@inject KeyBoard keyboard
-@inject SweetAlertService Swal;
+@using Microsoft.JSInterop;
+@using Wordle.Service.Interface
+@inject IJSRuntime JS
+
 
     <div class="text-center">
 
@@ -15,13 +15,13 @@
                 @for (int j = 0 ; j < 5 ; j++)
                 {
                     <div class="animation-card bg-dark" style="animation-delay : @j*100">
-                        <div class="letter-card  @(i<letters.GetLength(0) && j<letters.GetLength(1)? "status-"+letters[i,j]?.Status.ToString():"")" id="card-grid-@j">
+                        <div class="letter-card  @(i<game?.GetLettersGril().GetLength(0) && j<game?.GetLettersGril().GetLength(1)? "status-"+game?.GetLettersGril()[i,j]?.Status.ToString():"")" id="card-grid-@j">
 
-                            @if (i < letters.GetLength(0))
+                            @if (i < game?.GetLettersGril().GetLength(0))
                             {
-                                if (j < letters.GetLength(1))
+                                if (j < game?.GetLettersGril().GetLength(1))
                                 {
-                                    @letters[i,j]?.Character                                    
+                                    @game?.GetLettersGril()[i,j]?.Character
                                 }
                             }                  
                             
@@ -37,7 +37,7 @@
                 @for (int i = 0 ; i <=9 ; i++)
                 {
                 int j = i;
-                <button class="status-@(keyboard.Letters[j].Status)" @onclick="()=> SetLetterInGril(keyboard.Letters[j])">@keyboard.Letters[j].Character</button>
+                <button class="status-@(game?.GetKeyBoard().GetLetters()[j].Status)" @onclick="()=> game.SetLetterInGril(game.GetKeyBoard().GetLetters()[j])">@game?.GetKeyBoard().GetLetters()[j].Character</button>
                 }
 
             </dvi>
@@ -45,14 +45,14 @@
                 @for (int i = 10 ; i <= 18 ; i++)
                 {
                 int j = i;
-                <button class="status-@(keyboard.Letters[j].Status)" @onclick="()=> SetLetterInGril(keyboard.Letters[j])">@keyboard.Letters[j].Character</button>
+                <button class="status-@(game?.GetKeyBoard().GetLetters()[j].Status)" @onclick="()=> game.SetLetterInGril(game.GetKeyBoard().GetLetters()[j])">@game?.GetKeyBoard().GetLetters()[j].Character</button>
                 }
             </dvi>
             <dvi class="keyboard-row ">
-            @for (int i = 19 ; i < keyboard.Letters.Count ; i++)
+            @for (int i = 19 ; i < game?.GetKeyBoard().GetLetters().Count ; i++)
                 {
                 int j = i;
-                <button class="status-@(keyboard.Letters[j].Status)" @onclick="()=> SetLetterInGril(keyboard.Letters[j])">@keyboard.Letters[j].Character</button>
+                <button class="status-@(game?.GetKeyBoard().GetLetters()[j].Status)" @onclick="()=> game.SetLetterInGril(game.GetKeyBoard().GetLetters()[j])">@game?.GetKeyBoard().GetLetters()[j].Character</button>
 
                 }
             </dvi>
@@ -62,85 +62,13 @@
 
 @code{
 
-    protected int Colum=0; 
-    protected int RowEnter=0; 
-    protected Letter?[,] letters = new Letter[6,5];
-    protected async Task GetWord()
-    {
-        CheckWord check = new CheckWord(words,keyboard);
-        NotificationAlert notification = new NotificationAlert(Swal);
-        //chequear si existe la palabra 
-        if (check.WordExists(letters,RowEnter))
-        {
-            if (check.WordIsCorrect(letters,RowEnter))
-            {
-                await  notification.BasicNotificationAsync("Era la buena","Felicitaciones has ganado",SweetAlertIcon.Success);
+    protected Game? game;
+    private Notification? notification;
 
-
-            }else{
-                for (int j = 0 ; j < 5 ; j++)
-                {
-                    letters[RowEnter,j]= check.UpdateStatusLetter(letters,RowEnter)[j];
-                }
-                RowEnter++;
-                Colum = 0;
-            }            
-        }else
-        {
-            await notification.BasicNotificationAsync("Warning","Palabra no contenida",SweetAlertIcon.Warning);
-        }           
-        
-    }
-
-    protected async Task SetLetterInGril(Letter letter)
-    {
-
-        if(keyboard.IsEnter(letter)){
-            if (RowEnter< 5 && Colum ==5)
-            {
-               await GetWord();
-              
-            }else{
-               await GetWord();
-                //si no gano, entonces pierde proque era la ultima chence
-            }
-        }
-        else if (keyboard.IsClean(letter))
-        {
-            CleanWord();
-        }else{     
-
-            if (Colum < 5)
-            {
-                AddLetter(letter);
-            }
-        }
-
-
-    }
-    protected void CleanWord()
-    {                     
-        DiscountLetter();        
-    }
-
-
-
-    private void AddLetter(Letter letter){
-
-        if(Colum<5)
-        {
-            letters[RowEnter,Colum] = new Letter(StatusLetters.Default,letter.Character);
-            Colum++;
-        }
-    
-    }
-    private void DiscountLetter()
+    protected override void OnInitialized()
     {  
-        if (Colum > 0)
-        {                      
-        Colum--;
-        letters[RowEnter,Colum] = null;
-        }
-   
-     }
+        notification = new(JS);
+        game = new Game(notification);
+    }
+    
 }
