@@ -11,5 +11,6 @@ namespace Wordle.Service.Interface
         public bool IsClean(Letter letter);
         public bool IsEnter(Letter letter);
         public List<Letter> GetLetters();
+        public void ResetKeyBoard();
     }
 }

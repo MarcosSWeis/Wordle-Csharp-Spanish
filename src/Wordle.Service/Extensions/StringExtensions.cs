@@ -10,12 +10,8 @@ namespace Wordle.Service.Extensions
     {
 
 
-        public static List<int>? IndexesOfManyCharaters(this string word,string character)
+        public static List<int> IndexesOfOneCharacters(this string word,string character)
         {
-            var sub = word.ToCharArray();
-
-            var suba = character;
-
             List<int> indexes = new List<int>();
             for (int i = 0 ; i < word.Length ; i++)
             {
@@ -25,8 +21,6 @@ namespace Wordle.Service.Extensions
                 }
 
             }
-
-            var a = indexes.Count();
             return indexes;
 
         }

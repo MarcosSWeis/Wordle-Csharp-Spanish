@@ -51,6 +51,10 @@ namespace Wordle.Service
                 }
             }
         }
+        public void ResetKeyBoard()
+        {
+            SetKeyBoardLetters();
+        }
 
         public bool IsEnter(Letter letter)
         {

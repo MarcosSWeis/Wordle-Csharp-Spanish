@@ -29,14 +29,6 @@ namespace Wordle.Service
             string word = _joinLetters(letters,currentRow);
             return _words?.GetCurrentWord() == word;
         }
-
-        //cheque si la palabra esta en el array, para mandar error si puso cualquir cosa       
-        /// <summary>
-        /// habia que tenr un UpdateStatusLetterGril y Un UpdateStatusLetterKeyBoard (este privado)
-        /// </summary>
-        /// <param name="letters"></param>
-        /// <param name="currentRow"></param>
-        /// <returns></returns>
         public Letter[] UpdateStatusLetter(Letter?[,] letters,int currentRow)
         {
             var rowGridLetters = new Letter[5];
@@ -61,7 +53,32 @@ namespace Wordle.Service
             }
             return rowGridLetters;
         }
-
+        //private Letter[] UpdateStatusLetterGril(Letter?[,] letters,int currentRow)
+        //{
+        //    var rowGridLetters = new Letter[5];
+        //    for (int i = 0 ; i < 5 ; i++)
+        //    {
+        //        var status = this.ContainLetter(letters[currentRow,i],i);
+        //        var character = letters[currentRow,i]?.Character;
+        //        if (character != null)
+        //            rowGridLetters[i] = new Letter(status,character);
+        //    }
+        //    return rowGridLetters;
+        //}
+        //private void UpdateStatusLetterKeyBoard(Letter?[,] letters,int currentRow)
+        //{
+        //    for (int i = 0 ; i < 5 ; i++)
+        //    {
+        //        var letterPressed = _keyBoard?.GetLetters().Find(x => x.Character == letters[currentRow,i]?.Character);
+        //        var status = this.ContainLetter(letters[currentRow,i],i);
+        //        if (letterPressed != null)
+        //        {
+        //            //change state letter keyboard                 
+        //            if (letterPressed.Status != StatusLetters.Ok)
+        //                letterPressed.Status = status;
+        //        }
+        //    }
+        //}
         private string _joinLetters(Letter?[,] letters,int currentRow)
         {
             string completeWord = "";
@@ -72,15 +89,13 @@ namespace Wordle.Service
 
             return completeWord.ToLower();
         }
-
         private StatusLetters ContainLetter(Letter letter,int positionLetter)
         {
             if (_words.GetCurrentWord().Contains(letter.Character.ToLower()))
             {
-                var index = _words.GetCurrentWord().IndexesOfManyCharaters(letter.Character.ToLower());
-                var a = index?.Count;
-                // if (index.Contains(positionLetter))
-                if (_words.GetCurrentWord().IndexOf(letter.Character.ToLower()) == positionLetter)
+                List<int> indexes = _words.GetCurrentWord().IndexesOfOneCharacters(letter.Character.ToLower());
+                // if (_words.GetCurrentWord().IndexOf(letter.Character.ToLower()) == positionLetter)
+                if (indexes.Contains(positionLetter))
                 {
                     return StatusLetters.Ok;
                 }
@@ -89,7 +104,6 @@ namespace Wordle.Service
             } else
                 return StatusLetters.Locked;
         }
-
         public bool WordExists(Letter?[,] letters,int currentRow)
         {
             string word = _joinLetters(letters,currentRow);

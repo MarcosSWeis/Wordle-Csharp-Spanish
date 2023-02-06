@@ -10,7 +10,7 @@ namespace Wordle.Service.Interface
 {
     public interface INotification
     {
-        public ValueTask SwalFireAsync(string title,string message,NotificationType icon);
+        public Task SwalFireAsync(string title,string message,NotificationType icon);
 
     }
 }

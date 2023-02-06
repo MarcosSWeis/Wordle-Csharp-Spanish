@@ -19,7 +19,7 @@ namespace Wordle.Service
 
         private Letter?[,] _lettersGril = new Letter[6,5];
         private readonly ILoadWords _words;
-        private readonly IKeyBoard _keyBoard;
+        private IKeyBoard _keyBoard;
         private readonly INotification _swal;
 
         public Game()
@@ -52,19 +52,13 @@ namespace Wordle.Service
         {
             CheckWord check = new CheckWord(_words,_keyBoard);
 
-            if (RowEnter > 4)
-            {
-                var showSecretWord = _words.GetCurrentWord();
-                await _swal.SwalFireAsync("Game Over",$"Lo siento has perdido la palabra era\n : {showSecretWord}",NotificationType.Info);
-            }
-
-            //chequear si existe la palabra 
             if (check.WordExists(_lettersGril,RowEnter))
             {
                 if (check.WordIsCorrect(_lettersGril,RowEnter))
                 {
                     await _swal.SwalFireAsync("Winner","Felicitaciones ganastes",NotificationType.Success);
                     IsWinner = true;
+                    ResetGame();
                 } else
                 {
                     for (int j = 0 ; j < 5 ; j++)
@@ -74,38 +68,54 @@ namespace Wordle.Service
                     RowEnter++;
                     Colum = 0;
                 }
+
             } else
-            {
-                IsValidWord = false;
                 await _swal.SwalFireAsync("Warning","palabra no contenida",NotificationType.Warning);
+
+            if (RowEnter > 5)
+            {
+                var showSecretWord = _words.GetCurrentWord();
+                await _swal.SwalFireAsync("Game Over",$"Lo siento has perdido la palabra era\n : {showSecretWord}",NotificationType.Info);
+                ResetGame();
             }
-            IsValidWord = true;
         }
 
+        private void ResetGame()
+        {
+            _words.GetNewWord();
+            _keyBoard.ResetKeyBoard();
+            ResetGril();
+            ResetProperties();
+        }
+        private void ResetProperties()
+        {
+            Colum = 0;
+            RowEnter = 0;
+            IsWinner = false;
+            IsValidWord = false;
+        }
+        private void ResetGril()
+        {
+            _lettersGril = new Letter[6,5];
+        }
         public async Task SetLetterInGril(Letter letter)
         {
 
             if (_keyBoard.IsEnter(letter))
             {
                 if (RowEnter < 5 && Colum == 5)
-                {
                     await SendWord();
+                else
+                    await SendWord();
+                //si no gano, entonces pierde proque era la ultima chence
 
-                } else
-                {
-                    await SendWord();
-                    //si no gano, entonces pierde proque era la ultima chence
-                }
             } else if (_keyBoard.IsClean(letter))
             {
                 CleanWord();
             } else
             {
-
                 if (Colum < 5)
-                {
                     AddLetter(letter);
-                }
             }
 
 

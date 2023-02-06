@@ -14,7 +14,7 @@ namespace Wordle.Service
             _js = js;
         }
 
-        public async ValueTask SwalFireAsync(string title,string message,NotificationType icon)
+        public async Task SwalFireAsync(string title,string message,NotificationType icon)
         {
             await _js.InvokeVoidAsync("Swal.fire",new { title = title,text = message,icon = icon.ToString().ToLower() });
         }
