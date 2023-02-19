@@ -1,0 +1,90 @@
+﻿@page "/wordle"
+@using System.Diagnostics
+@using Wordle.Service;
+@using Microsoft.JSInterop;
+@using Wordle.Service.Interface
+@inject IJSRuntime JS
+@inject SettingsGame settings
+
+<div class="text-center">
+
+    @if(game == null)
+    {
+    <div class="loader">Loading...</div>
+    }
+
+    <div class="ctn-grid-word" style="grid-template-rows:repeat(@game?.MaxNumberOfAttempts,1fr)">
+        @for (int i = 0 ; i < game?.MaxNumberOfAttempts ; i++)
+        {
+            <div class="rows-grid-word bg-dark" aria-label="row-@i" id="row-grid-@i" style="grid-template-columns:repeat(@game?.MaxColumLength,1fr)">
+                @for (int j = 0 ; j < game?.MaxColumLength ; j++)
+                {
+                    <div class="animation-card element-animated-row-@i" id="animation-@i">
+                        <div class="letter-card " id="card-grid-@j">
+
+                           @* @if (i < game?.GetLettersGril().GetLength(0))
+                            {
+                                if (j < game?.GetLettersGril().GetLength(1))
+                                {
+                                    @game?.GetLettersGril()[i,j]?.Character
+                                    
+                                }
+                            }*@
+                            @game.GetCharacterGril(i,j)
+
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+
+    <div class="keyboard">
+        <dvi class="keyboard-row ">
+            @for (int i = 0 ; i <= 9 ; i++)
+            {
+                int j = i;
+                <button class="status-@(game?.GetKeyBoard().GetLetters()[j].Status)" @onclick="()=> game.SetLetterInGril(game.GetKeyBoard().GetLetters()[j])">@game?.GetKeyBoard().GetLetters()[j].Character</button>
+            }
+
+        </dvi>
+        <dvi class="keyboard-row keyboard-row-mid">
+            @for (int i = 10 ; i <= 18 ; i++)
+            {
+                int j = i;
+                <button class="status-@(game?.GetKeyBoard().GetLetters()[j].Status)" @onclick="()=> game.SetLetterInGril(game.GetKeyBoard().GetLetters()[j])">@game?.GetKeyBoard().GetLetters()[j].Character</button>
+            }
+        </dvi>
+        <dvi class="keyboard-row ">
+            @for (int i = 19 ; i < game?.GetKeyBoard().GetLetters().Count ; i++)
+            {
+                int j = i;
+                <button class="status-@(game?.GetKeyBoard().GetLetters()[j].Status)" @onclick="()=> game.SetLetterInGril(game.GetKeyBoard().GetLetters()[j])">@game?.GetKeyBoard().GetLetters()[j].Character</button>
+
+            }
+        </dvi>
+
+    </div>
+</div>
+
+
+
+@code {
+    delegate string DelegateChangeColorGril(int i, int j);
+    protected Game? game;
+    private Notification? notification;
+
+  
+
+
+    protected override  void OnInitialized()
+    {
+        notification = new(JS);
+        game = new Game(notification,settings,JS);
+
+
+    }
+
+   
+
+}

@@ -10,6 +10,7 @@
     <PackageReference Include="CurrieTechnologies.Razor.SweetAlert2" Version="5.4.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components" Version="6.0.0" />
     <PackageReference Include="Microsoft.JSInterop" Version="6.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
     <PackageReference Include="System.Web.Services.Description" Version="4.10.0" />
   </ItemGroup>
 

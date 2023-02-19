@@ -80,20 +80,12 @@ nav {
     color: white;
 }
 
-.ctn-grid-word {
-    width: 400px;
-    margin: auto;
-    padding-bottom: 2rem;
-    display: grid;
-    grid-template-rows: repeat(6, 1fr);
-    grid-gap: 5px;
-    padding: 10px;
-    box-sizing: border-box;
-}
+
+
 
 .rows-grid-word {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    /*grid-template-columns: repeat(5, 1fr);*/
     grid-gap: 5px;
 }
 
@@ -114,6 +106,56 @@ nav {
     box-sizing: border-box;
     color: white;
     text-transform: uppercase;
+}
+
+
+/*LOADER SPINNER*/
+.loader,
+.loader:after {
+    border-radius: 50%;
+    width: 10em;
+    height: 10em;
+   
+}
+
+.loader {
+    margin: 60px auto;
+    font-size: 10px;
+    position: relative;
+    text-indent: -9999em;
+    border-top: 1.1em solid  #02cae5;
+    border-right: 1.1em solid #02cae5;
+    border-bottom: 1.1em solid #02cae5;
+    border-left: 1.1em solid #ffffff;
+    -webkit-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-animation: load8 1.1s infinite linear;
+    animation: load8 1.1s infinite linear;
+}
+
+@-webkit-keyframes load8 {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes load8 {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
 }
 
 
@@ -164,8 +206,66 @@ nav {
     background-color: #3a3a3c;
 }
 .status-Default {
-    background-color: rgb(33, 38, 43)
+    background-color: #21262b;
 }
 .status-Ok {
     background-color: #538d4e;
+}
+
+
+/*ROTACION WORD*/
+
+.rotate-word {
+    animation: rotateY 1s ease-in-out ;
+    transform-origin: center center;
+}
+
+@keyframes rotateY {
+    0% {
+        transform: rotateX(0deg);
+    }
+
+    100% {
+        transform: rotateX(90deg);
+    }
+
+}
+
+
+/*SETTINGS*/
+
+.ctn-settings{
+    width:50%;
+    margin:initial;
+}
+@media (min-width: 300px) {
+    ctn-grid-word {
+        width: 100% !important;
+        margin: auto;
+        padding-bottom: 2rem;
+        display: grid;
+        /* grid-template-rows: repeat(7, 1fr);*/
+        grid-gap: 5px;
+        padding: 10px;
+        box-sizing: border-box;
+    }
+    .keyboard {
+        height: 100%;
+        margin-top: 2.5rem !important;
+        width: 100% !important;
+        margin: auto;       
+    }
+
+}
+@media (min-width: 900px) {
+    ctn-grid-word {
+        max-width: 1200px !important;
+       
+    }
+    .keyboard {
+        max-width: 1200px !important;
+    }
+    .ctn-settings{
+        max-width:700px
+    }
 }

@@ -9,10 +9,11 @@ namespace Wordle.Service.Interface
     public interface IGame
     {
         public Task SendWord();
-
         public Task SetLetterInGril(Letter letter);
         public Letter?[,] GetLettersGril();
         public IKeyBoard GetKeyBoard();
+        //public int GetMaxNumberOfAttempts();
+        //public int GetMaxColumLength();
 
     }
 }

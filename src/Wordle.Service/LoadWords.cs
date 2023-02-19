@@ -11,7 +11,7 @@ namespace Wordle.Service
 
         private StreamReader _sr;
 
-        private string _pathfileWordByLetters = "bin/Debug/net6.0/length/05.txt";
+        private string _pathfileWordByLetters = "bin/Debug/net6.0/length/5.txt";
 
         private string _currentWord = "";
 
@@ -21,11 +21,12 @@ namespace Wordle.Service
 
         private List<string> _words = new List<string>();
 
-        public LoadWords(int countLettersByWord = 5)
+        //en vez de 5 iriran el _settingsGame.MaxColumLength
+        public LoadWords(int maxColumLength = 5)
         {
-            CountLettersByWord = countLettersByWord;
+            CountLettersByWord = maxColumLength;
 
-            _pathfileWordByLetters = FileSelectorByNumeberOfLetters(countLettersByWord);
+            _pathfileWordByLetters = FileSelectorByNumeberOfLetters(maxColumLength);
 
             _sr = new StreamReader(_pathfileWordByLetters);
 
@@ -37,9 +38,9 @@ namespace Wordle.Service
 
         private string FileSelectorByNumeberOfLetters(int byCountLettes)
         {
-            if (byCountLettes > 0 && byCountLettes <= 26)
+            if (byCountLettes >= 5 && byCountLettes <= 26)
             {
-                string switchPath = _pathfileWordByLetters.Replace("05","0" + byCountLettes.ToString());
+                string switchPath = _pathfileWordByLetters.Replace("5",byCountLettes.ToString());
                 return Path.Combine(Directory.GetCurrentDirectory(),switchPath);
             }
 

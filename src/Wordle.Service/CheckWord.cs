@@ -14,11 +14,11 @@ using Wordle.Service.Interface;
 
 namespace Wordle.Service
 {
-    public class CheckWord :ICheckWord
+    public class CheckWord :SettingsGame, ICheckWord
     {
         private IKeyBoard _keyBoard;
         private ILoadWords _words;
-        public CheckWord(ILoadWords words,IKeyBoard keyBoard)
+        public CheckWord(ILoadWords words,IKeyBoard keyBoard,int settingsMaxColumLength,int settingsMaxNumberOfAttempts) : base(settingsMaxColumLength,settingsMaxNumberOfAttempts)
         {
             _keyBoard = keyBoard;
             _words = words;
@@ -31,8 +31,8 @@ namespace Wordle.Service
         }
         public Letter[] UpdateStatusLetter(Letter?[,] letters,int currentRow)
         {
-            var rowGridLetters = new Letter[5];
-            for (int i = 0 ; i < 5 ; i++)
+            var rowGridLetters = new Letter[MaxColumLength];
+            for (int i = 0 ; i < MaxColumLength ; i++)
             {
                 var letterKeyBoard = _keyBoard?.GetLetters().Find(x => x.Character == letters[currentRow,i]?.Character);
                 var status = this.ContainLetter(letters[currentRow,i],i);
@@ -82,7 +82,7 @@ namespace Wordle.Service
         private string _joinLetters(Letter?[,] letters,int currentRow)
         {
             string completeWord = "";
-            for (int j = 0 ; j < 5 ; j++)
+            for (int j = 0 ; j < MaxColumLength ; j++)
             {
                 completeWord += letters[currentRow,j]?.Character;
             }

@@ -1,0 +1,43 @@
+﻿@page "/settings"
+@using Wordle.Service
+@inject SettingsGame settings
+
+<h3 class="text-center mb-5">Settings</h3>
+<div class="ctn-settings m-auto ">
+    <EditForm Model="@settings" OnSubmit="HandleValidSubmit">
+         <DataAnnotationsValidator />  
+        <div class="mb-3">
+            <label class="d-block mb-1" for="selectMaxNumberOfLetter">Seleccionar la cantidad de letras por palabra</label>
+            <InputSelect id="selectMaxNumberOfLetter" @bind-Value="settings.MaxColumLength">
+                     <option value="">Seleccionar valor </option>
+            @for (int i = settings.MinNumberOfFilesForWord ; i < settings.MaxNumberOfFilesForWord ; i++)
+            {
+                <option value="@i">@i</option>
+            }       
+            </InputSelect>
+                <ValidationMessage For="() => settings.MaxColumLength" />
+        </div>
+
+        <div class="mb-3 ">
+            <label class="d-block mb-1" for="selectMaxNumberOfWord">Seleccionar la cantidad de intentos para adivinar la palabra</label>
+            <InputSelect id="selectMaxNumberOfWord" @bind-Value="settings.MaxNumberOfAttempts">
+                <option value="">Seleccionar valor </option>
+                @for (int i = settings.MinNumberOfFilesForWord ; i < settings.MaxNumberOfFilesForWord +1 ; i++)
+                {
+                    <option value="@i">@i</option>
+                }
+            </InputSelect>
+            <ValidationMessage For="() => settings.MaxNumberOfAttempts" />
+        </div>
+ 
+        <button type="submit" class="btn btn-primary d-block ">Enviar</button>
+    </EditForm>
+</div>
+
+
+@code {
+    private void HandleValidSubmit()
+    {
+
+    }
+}

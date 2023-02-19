@@ -11,6 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSession();
+builder.Services.AddSingleton<SettingsGame>();
 //Seweet Alet 2
 builder.Services.AddSweetAlert2(optrion => optrion.SetThemeForColorSchemePreference(ColorScheme.Dark,SweetAlertTheme.Dark));
 

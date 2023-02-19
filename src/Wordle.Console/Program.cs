@@ -1,10 +1,9 @@
 ﻿using Wordle.Service;
 using Wordle.Service.Interface;
 
-ILoadWords lw = new LoadWords();
+//IGame game = new Game();
 
-Console.WriteLine($"poperty a  : {lw.GetCurrentWord()} ");
-Console.WriteLine($"poperty a  : {lw.GetCurrentWord()} ");
+Console.WriteLine("aa");
 
 
 
