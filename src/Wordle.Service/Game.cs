@@ -67,7 +67,8 @@ namespace Wordle.Service
             {
                 if (check.WordIsCorrect(_lettersGril,RowEnter))
                 {
-                    //      await SetStyleRotateGril(); si gana no se verian todas en verde proque no ejecuto la funion esta ya que la tengo que ejeutar depues de actualizar todos lso estados
+                    await SetStyleRotateGrilWinnerJS();
+                    //ver como hacer para que el cartel se muetre despues de que giran todos cuadraditos verdes
                     await _swal.SwalFireAsync("Winner","Felicitaciones ganaste",NotificationType.Success);
                     IsWinner = true;
                     ResetGame();
@@ -77,7 +78,7 @@ namespace Wordle.Service
                     {
                         _lettersGril[RowEnter,j] = check.UpdateStatusLetter(_lettersGril,RowEnter)[j];
                     }
-                    await SetStyleRotateGril();
+                    await SetStyleRotateGrilJS();
                     RowEnter++;
                     Colum = 0;
 
@@ -95,9 +96,13 @@ namespace Wordle.Service
             }
         }
 
-        private async Task SetStyleRotateGril()
+        private async Task SetStyleRotateGrilJS()
         {
             await _JS.InvokeVoidAsync("RotateRow",RowEnter,JsonConvert.SerializeObject(StatusJs()),MaxColumLength);
+        }
+        private async Task SetStyleRotateGrilWinnerJS()
+        {
+            await _JS.InvokeVoidAsync("RotateRowWinner",RowEnter,MaxColumLength);
         }
         private async Task ResetStylesGrilJS()
         {
@@ -197,39 +202,20 @@ namespace Wordle.Service
 
         }
 
-        public bool IsEnter(int i,int j)
-        {
-            return GetLetterGril(i,j) != null ? _keyBoard.IsEnter(GetLetterGril(i,j)) : false;
-        }
+        //public bool IsEnter(int i,int j)
+        //{
+        //    return GetLetterGril(i,j) != null ? _keyBoard.IsEnter(GetLetterGril(i,j)) : false;
+        //}
 
         public string? GetCharacterGril(int i,int j)
         {
             return GetLetterGril(i,j) != null ? GetLetterGril(i,j)?.Character : "";
         }
 
-        public StatusLetters? GetStatusGril(int i,int j)
-        {
-            return GetLetterGril(i,j) != null ? GetLetterGril(i,j)?.Status : null;
-        }
-
-        public string SetStyleRotateWord(int i,int j)
-        {
-
-            return (i < GetLettersGril().GetLength(0) && j < GetLettersGril().GetLength(1) && GetLettersGril()[i,j]?.Status != StatusLetters.Default) ? " rotate-word" : "";
-        }
-        public string SetStyleStatusInGril(int i,int j)
-        {
-            //"status-" + GetLettersGril()[i,j]?.Status.ToString()            
-            var style = Task.Run(async delegate
-            {
-                await Task.Delay(j);
-                return (i < GetLettersGril().GetLength(0) && j < GetLettersGril().GetLength(1)) ? "status-" + GetLettersGril()[i,j]?.Status.ToString() : "";
-            });
-            StyleStatus = style.Result;
-            style.Wait();
-            return style.Result;
-
-        }
+        //public StatusLetters? GetStatusGril(int i,int j)
+        //{
+        //    return GetLetterGril(i,j) != null ? GetLetterGril(i,j)?.Status : null;
+        //}
 
 
     }

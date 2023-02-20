@@ -25,13 +25,12 @@ function SetColor(status)
 
 function RotateRow(numberRow, lettersGril, maxColumLength)
 {
-       let _lettersGril = JSON.parse(lettersGril);  
-       let lettesAnimeted = document.querySelectorAll(".element-animated-row-"+numberRow);
-     console.log(_lettersGril)
+   let _lettersGril = JSON.parse(lettersGril);  
+   let lettesAnimeted = document.querySelectorAll(".element-animated-row-"+numberRow);
+   
     for (let i = 0; i < maxColumLength; i++) {
         let index = i;
-        const element = lettesAnimeted[i];
-        console.log(element)
+        const element = lettesAnimeted[i];        
         element.classList.add('rotate-word'); // Agrega la clase que define la animación
         element.style.animationDuration = i + 's'; // Establece la duración de la animación
         element.addEventListener('animationend', () => {   
@@ -40,7 +39,21 @@ function RotateRow(numberRow, lettersGril, maxColumLength)
         }, { once: true });
     }
     
+}
+
+function RotateRowWinner(numberRow, maxColumLength) {    
+    let lettesAnimeted = document.querySelectorAll(".element-animated-row-" + numberRow);
+    for (let i = 0; i < maxColumLength; i++) {
+        let index = i;
+        const element = lettesAnimeted[i];
+        element.classList.add('rotate-word'); // Agrega la clase que define la animación
+        element.style.animationDuration = i + 's'; // Establece la duración de la animación
+        element.addEventListener('animationend', () => {
+            element.classList.add("status-Ok" )
+            element.removeEventListener('animationend', this);
+        }, { once: true });
     }
+}
 
 function ResetStyleGril(numberOfLettersToClearStyle) {
     let lettesAnimeted = document.querySelectorAll(".animation-card")
