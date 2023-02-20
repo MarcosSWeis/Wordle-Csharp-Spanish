@@ -11,7 +11,9 @@ h1:focus {
 a, .btn-link {
     color: #0071c1;
 }
-
+.top-nav {
+    background-color: #121213 !important;
+}
 .btn-primary {
     color: #fff;
     background-color: #1b6ec2;
@@ -33,6 +35,8 @@ a, .btn-link {
 .validation-message {
     color: red;
 }
+
+
 
 #blazor-error-ui {
     background: lightyellow;
@@ -76,17 +80,23 @@ body {
 }
 
 nav {
-    background-color: #121213;
+    background-color: transparent;
     color: white;
 }
 
+.top-row {
+    background-color: rgba(0,0,0,0.0) !important;
+}
 
-
+.color-left-nav {
+    background-image: linear-gradient(180deg, rgb(5, 103, 85) 0%, #062547 70%);
+}
 
 .rows-grid-word {
     display: grid;
     /*grid-template-columns: repeat(5, 1fr);*/
     grid-gap: 5px;
+    margin-bottom: 0.5rem;
 }
 
 .animation-card {
@@ -238,9 +248,58 @@ nav {
     width:50%;
     margin:initial;
 }
+
+
+/*vibrar*/
+
+@keyframes vibrar {
+    0% {
+        transform: translateX(0);
+    }
+
+    10%, 30%, 50%, 70%, 90% {
+        transform: translateX(-10px);
+    }
+
+    20%, 40%, 60%, 80% {
+        transform: translateX(10px);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+.invalid-word {
+    animation: vibrar 0.5s;
+}
+
+/*alert*/
+
+.alert {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    background-color: white;
+    color: black;
+    font-weight: bold;
+    font-size: 20px;
+    text-align: center;
+    width: 210px;
+    margin: auto;
+    position: absolute;
+    top: 1%;
+    left: 50%;
+}
+
+/* CUSTOM CLASS TO MODAL SWEETALERT*/
+
+
+
 @media (min-width: 300px) {
     ctn-grid-word {
-        width: 100% !important;
+        width: 100%!important;
         margin: auto;
         padding-bottom: 2rem;
         display: grid;
@@ -258,9 +317,9 @@ nav {
 
 }
 @media (min-width: 900px) {
-    ctn-grid-word {
-        max-width: 1200px !important;
-       
+    .ctn-grid-word {
+        max-width: 600px !important;     
+        margin: auto !important;
     }
     .keyboard {
         max-width: 1200px !important;

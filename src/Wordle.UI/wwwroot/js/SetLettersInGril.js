@@ -69,3 +69,24 @@ function ResetStyleGril(numberOfLettersToClearStyle) {
     }
 }
 
+
+function VibrateInvalidWord(numberRow) { 
+    let elementAlert = document.querySelector(".alert");
+    let rowLetter = document.getElementById("row-grid-" + numberRow); 
+    rowLetter.classList.add("invalid-word");
+    rowLetter.addEventListener("animationend", () => {
+        rowLetter.classList.remove("invalid-word")
+       // rowLetter.removeEventListener('animationend', this);
+    })
+    ShowAlert(elementAlert);
+    setTimeout(() => {
+        HideAlert(elementAlert);
+    }, 1500)
+}
+
+function ShowAlert(alert) { 
+    alert.style.display = 'flex';
+}
+function HideAlert(alert) {  
+    alert.style.display = 'none';
+}

@@ -11,6 +11,8 @@ namespace Wordle.Service.Interface
     public interface INotification
     {
         public Task SwalFireAsync(string title,string message,NotificationType icon);
+        public Task SwalFireAsync(string title,string message,NotificationType icon,PositionSweetAlert position);
+
 
     }
 }

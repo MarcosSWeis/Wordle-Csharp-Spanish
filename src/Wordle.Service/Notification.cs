@@ -20,6 +20,12 @@ namespace Wordle.Service
         }
 
 
+        public async Task SwalFireAsync(string title,string message,NotificationType icon,PositionSweetAlert position)
+        {
 
+
+            await _js.InvokeVoidAsync("Swal.fire",new { title = title,text = message,icon = icon.ToString().ToLower(),position = position.ToString(),grow = "row",showConfirmButton = false,showCloseButton = true });
+
+        }
     }
 }

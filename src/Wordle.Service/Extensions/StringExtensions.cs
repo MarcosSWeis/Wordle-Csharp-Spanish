@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Wordle.Service.Extensions
@@ -22,6 +23,21 @@ namespace Wordle.Service.Extensions
 
             }
             return indexes;
+
+        }
+        public static string SplitUppersWhitMiddleDash(this string str)
+
+        {
+            string result = str;
+            for (int i = 1 ; i < str.Length ; i++)
+            {
+                if (char.IsUpper(str[i]))
+                {
+                    result = result.Insert(i,"-");
+                    i++;
+                }
+            }
+            return result.ToLower();
 
         }
     }

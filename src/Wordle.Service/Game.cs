@@ -24,7 +24,7 @@ namespace Wordle.Service
         private IKeyBoard _keyBoard;
         private readonly INotification _swal;
         private readonly IJSRuntime _JS;
-
+        private delegate Task DelegateNotificationAlert(string title,string message,NotificationType type);
         public Game(SettingsGame settings) : base(settings.MaxColumLength,settings.MaxNumberOfAttempts)
         {
             _words = new LoadWords(settings.MaxColumLength);
@@ -69,7 +69,7 @@ namespace Wordle.Service
                 {
                     await SetStyleRotateGrilWinnerJS();
                     //ver como hacer para que el cartel se muetre despues de que giran todos cuadraditos verdes
-                    await _swal.SwalFireAsync("Winner","Felicitaciones ganaste",NotificationType.Success);
+                    await _swal.SwalFireAsync("Felicitaciones ganaste","",NotificationType.Success,PositionSweetAlert.bottom);
                     IsWinner = true;
                     ResetGame();
                 } else
@@ -85,7 +85,11 @@ namespace Wordle.Service
                 }
 
             } else
-                await _swal.SwalFireAsync("Warning","palabra no contenida",NotificationType.Warning);
+            {
+                await SetStyleNoRotateGrilWarrningJS();
+                //await _swal.SwalFireAsync("Warning","palabra no contenida",NotificationType.Warning);
+
+            }
 
 
             if (RowEnter > MaxNumberOfAttempts - 1)
@@ -103,10 +107,17 @@ namespace Wordle.Service
         private async Task SetStyleRotateGrilWinnerJS()
         {
             await _JS.InvokeVoidAsync("RotateRowWinner",RowEnter,MaxColumLength);
+
+        }
+
+        private async Task SetStyleNoRotateGrilWarrningJS()
+        {
+            await _JS.InvokeVoidAsync("VibrateInvalidWord",RowEnter);
+            //await _swal.SwalFireAsync("Warning","palabra no contenida",NotificationType.Warning);
+
         }
         private async Task ResetStylesGrilJS()
         {
-
             await _JS.InvokeVoidAsync("ResetStyleGril");
         }
         private string[] StatusJs()

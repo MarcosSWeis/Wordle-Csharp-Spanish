@@ -2,7 +2,9 @@
 @using System.Diagnostics
 @using Wordle.Service;
 @using Microsoft.JSInterop;
+@using Wordle.Service.Enums
 @using Wordle.Service.Interface
+@using Wordle.Service.Extensions
 @inject IJSRuntime JS
 @inject SettingsGame settings
 
@@ -12,26 +14,20 @@
     {
     <div class="loader">Loading...</div>
     }
+      
+    <div class="alert">
+        <p>Palabra incorrecta</p>
+    </div>
 
-    <div class="ctn-grid-word" style="grid-template-rows:repeat(@game?.MaxNumberOfAttempts,1fr)">
+    <div class="ctn-grid-word " style="grid-template-rows:repeat(@game?.MaxNumberOfAttempts,1fr)">
         @for (int i = 0 ; i < game?.MaxNumberOfAttempts ; i++)
         {
             <div class="rows-grid-word bg-dark" aria-label="row-@i" id="row-grid-@i" style="grid-template-columns:repeat(@game?.MaxColumLength,1fr)">
                 @for (int j = 0 ; j < game?.MaxColumLength ; j++)
                 {
                     <div class="animation-card element-animated-row-@i" id="animation-@i">
-                        <div class="letter-card " id="card-grid-@j">
-
-                           @* @if (i < game?.GetLettersGril().GetLength(0))
-                            {
-                                if (j < game?.GetLettersGril().GetLength(1))
-                                {
-                                    @game?.GetLettersGril()[i,j]?.Character
-                                    
-                                }
-                            }*@
+                        <div class="letter-card " id="card-grid-@j">                         
                             @game.GetCharacterGril(i,j)
-
                         </div>
                     </div>
                 }
