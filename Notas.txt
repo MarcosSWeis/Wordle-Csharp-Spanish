@@ -31,3 +31,4 @@ Provamso con controllers
  
  }
 
+ Si una letra ya esta en su lugar no puede aparecer en amarillo en otro lado, porque eso significa que tiene dos veces la misma letra.

@@ -25,8 +25,23 @@ namespace Wordle.Service.Extensions
             return indexes;
 
         }
-        public static string SplitUppersWhitMiddleDash(this string str)
 
+        public static int NumberOfTimesTheLetterIsRepeated(this string word,string character)
+        {
+            int count = 0;
+            for (int i = 0 ; i < word.Length ; i++)
+            {
+                if (word[i].Equals(character))
+                {
+                    count++;
+                }
+            }
+            return count;
+
+        }
+
+
+        public static string SplitUppersWhitMiddleDash(this string str)
         {
             string result = str;
             for (int i = 1 ; i < str.Length ; i++)
