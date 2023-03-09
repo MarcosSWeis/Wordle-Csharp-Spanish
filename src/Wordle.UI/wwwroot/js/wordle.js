@@ -25,6 +25,7 @@ function SetColor(status)
 
 function RotateRow(numberRow, lettersGril, maxColumLength)
 {
+    
    let _lettersGril = JSON.parse(lettersGril);  
    let lettesAnimeted = document.querySelectorAll(".element-animated-row-"+numberRow);
    
@@ -32,7 +33,7 @@ function RotateRow(numberRow, lettersGril, maxColumLength)
         let index = i;
         const element = lettesAnimeted[i];        
         element.classList.add('rotate-word'); // Agrega la clase que define la animación
-        element.style.animationDuration = ( i / 3 ) + 's'; // Establece la duración de la animación
+        element.style.animationDuration = ( (i+1) / 6 ) + 's'; // Establece la duración de la animación
         element.addEventListener('animationend', () => {   
             element.classList.add("status-" + _lettersGril[index])
             element.removeEventListener('animationend', this);
@@ -47,7 +48,7 @@ function RotateRowWinner(numberRow, maxColumLength) {
         let index = i;
         const element = lettesAnimeted[i];
         element.classList.add('rotate-word'); // Agrega la clase que define la animación
-        element.style.animationDuration = (i / 3) + 's'; // Establece la duración de la animación
+        element.style.animationDuration = ((i+1) / 6) + 's'; // Establece la duración de la animación
         element.addEventListener('animationend', () => {
             element.classList.add("status-Ok" )
             element.removeEventListener('animationend', this);
