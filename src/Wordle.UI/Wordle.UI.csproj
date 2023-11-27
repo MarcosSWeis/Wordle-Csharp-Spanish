@@ -1,22 +1,38 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<DockerDefaultTargetOS>Windows</DockerDefaultTargetOS>
+		<DockerfileContext>..\..</DockerfileContext>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="CurrieTechnologies.Razor.SweetAlert2" Version="5.4.0" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="CurrieTechnologies.Razor.SweetAlert2" Version="5.4.0" />
+		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.4" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Wordle.Service\Wordle.Service.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<None Update="DataWord\**\*.txt">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Data\" />
-    <Folder Include="Helpers\" />
-  </ItemGroup>
+	<ItemGroup>
+		<Folder Include="Data\" />
+		<Folder Include="DataWord\" />
+		<Folder Include="Helpers\" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Wordle.Service\Wordle.Service.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="wwwroot\**\*.*">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
 
 </Project>

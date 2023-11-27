@@ -1,7 +1,4 @@
-﻿using System.Globalization;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Xml.Linq;
+﻿using System.Text.RegularExpressions;
 using Wordle.Service.Interface;
 
 namespace Wordle.Service
@@ -11,7 +8,7 @@ namespace Wordle.Service
 
         private StreamReader _sr;
 
-        private string _pathfileWordByLetters = "bin/Debug/net6.0/length/5.txt";
+        private string _pathfileWordByLetters = "DataWord/length/5.txt";
 
         private string _currentWord = "";
 
